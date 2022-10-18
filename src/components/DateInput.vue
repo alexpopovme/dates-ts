@@ -26,6 +26,10 @@ if (props.dates) {
      updateOutDate(newVal > oldVal ? 1 : -1)
   })
 }
+
+const inputHandler = (ev: Event) => {
+  emit('update:modelValue', ((ev.target as HTMLInputElement).value))
+}
 </script>
 
 <template>
@@ -33,7 +37,7 @@ if (props.dates) {
     <input type="date"
            class="date-input__value bordered"
            :value="modelValue"
-           @input="emit('update:modelValue', $event.target.value)"
+           @input="inputHandler"
     />
   </label>
 </template>
