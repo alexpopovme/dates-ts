@@ -1,0 +1,45 @@
+/*
+Improve: use SASS
+*/
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.bordered {
+  border: lightgrey 1px solid;
+  border-radius: 4px;
+}
+
+.rt-bordered {
+  border-left: 0;
+  border-bottom: 0;
+  border-radius: 0;
+}
+
+.lt-bordered {
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 0;
+}
+
