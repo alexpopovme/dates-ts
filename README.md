@@ -1,2 +1,3 @@
 # Dates-ts
-Exercise/example
+Exercise/example   
+Demo - https://alexpopovme.github.io/dates-ts/index.html
