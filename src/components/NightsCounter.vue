@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { oneDayInMs, dateStringToMs } from '../utils'
 
 // Improve: validate props
-const props = defineProps(['dates'])
+const props = defineProps(['dates', 'nights'])
 const emit = defineEmits(['nights-change'])
+const nightsProp = computed(() => props.nights)
 
-const nights = ref(0)
-
-watch(() => props.dates.dateOut, (newDateOut) => {
+watch(() => props.dates.dateOut, (newDateOut, oldDateOut) => {
   // improve: check if out date is after the in date
   const daysInMs = dateStringToMs(newDateOut) - dateStringToMs(props.dates.dateIn)
-  nights.value = Math.ceil(daysInMs / oneDayInMs)
+  const value = Math.ceil(daysInMs / oneDayInMs)
+  emit('nights-change', value)
 })
 
 const changeNights = (n: number) => {
-  nights.value += n
-  emit('nights-change', nights.value)
+  const value = nightsProp.value + n
+  emit('nights-change', value)
 }
 </script>
 
@@ -26,7 +26,7 @@ const changeNights = (n: number) => {
     <div class="nights-counter-inner">
        <div class="nights-counter__item nights-counter_button bordered rt-bordered"
             @click="changeNights(-1)">-</div>
-       <div class="nights-counter__item">{{nights}}</div>
+       <div class="nights-counter__item">{{nightsProp}}</div>
        <div class="nights-counter__item nights-counter_button bordered lt-bordered"
             @click="changeNights(1)">+</div>
     </div>

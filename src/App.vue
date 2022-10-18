@@ -25,7 +25,7 @@ const updateNights = (val: number) => {
   <div class="container">
     <date-input v-model="dates.dateIn"/>
     <div class="nights-counter-wrapper">
-      <nights-counter :dates="dates" @nights-change="updateNights" :nights="nights"/>
+      <nights-counter :dates="dates" :nights="nights" @nights-change="updateNights"/>
     </div>
     <date-input v-model="dates.dateOut" :dates="dates" :nights="nights" @date-out-change="updateDateOut"/>
   </div>
