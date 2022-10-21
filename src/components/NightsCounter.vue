@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 import { oneDayInMs, dateStringToMs } from '../utils'
-import { ReservationData } from '../types/common'
+import { ReservationData } from '../../types/common'
 
 /*
 * Note: At the moment Vue v3.2.37 doesn't support direct

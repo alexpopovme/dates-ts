@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watch } from 'vue'
-import { ReservationData } from '../types/common'
+import { ReservationData } from '../../types/common'
 import {
   oneDayInMs,
   dateStringToMs,
