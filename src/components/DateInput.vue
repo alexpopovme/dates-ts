@@ -1,29 +1,28 @@
 <script setup lang="ts">
-import { watch, computed, ref } from 'vue'
+import { watch } from 'vue'
 import { oneDayInMs, dateStringToMs, dateMsToString } from '../utils'
 
 // Improve: validate props
-const props = defineProps(['modelValue', 'dates', 'nights'])
+const props = defineProps(['modelValue', 'reservationData'])
 const emit = defineEmits(['update:modelValue', 'date-out-change'])
 
-const nightsProp = computed(() => props.nights)
 let isDateChange = false
 
 const updateOutDate = (n: number) => {
-  const dateOutMs = dateStringToMs(props.dates.dateOut)
+  const dateOutMs = dateStringToMs(props.reservationData.dateOut)
   const plusDayMs = dateOutMs + oneDayInMs * n
   emit('date-out-change', dateMsToString(plusDayMs))
 }
 
-if (props.dates) {
-  watch(() => props.dates.dateIn, (newDateIn) => {
-    const currNightsInMs = nightsProp.value * oneDayInMs
+if (props.reservationData) {
+  watch(() => props.reservationData.dateIn, (newDateIn) => {
+    const currNightsInMs = props.reservationData.nights * oneDayInMs
     const dateInMs = dateStringToMs(newDateIn)
     const newDateOutMs = dateInMs + currNightsInMs
     emit('date-out-change', dateMsToString(newDateOutMs))
   })
 
-  watch(nightsProp, (newVal, oldVal) => {
+  watch(() => props.reservationData.nights, (newVal, oldVal) => {
     if (isDateChange) {
       isDateChange = false
       return
@@ -34,7 +33,8 @@ if (props.dates) {
 
 const inputHandler = (ev: Event) => {
   isDateChange = true
-  emit('update:modelValue', ((ev.target as HTMLInputElement).value))
+  const typedTarget = ev.target as HTMLInputElement
+  emit('update:modelValue', typedTarget.value)
 }
 </script>
 

@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { watch } from 'vue'
 import { oneDayInMs, dateStringToMs } from '../utils'
 
 // Improve: validate props
-const props = defineProps(['dates', 'nights'])
+const props = defineProps(['reservationData'])
 const emit = defineEmits(['nights-change'])
-const nightsProp = computed(() => props.nights)
 
-watch(() => props.dates.dateOut, (newDateOut, oldDateOut) => {
+watch(() => props.reservationData.dateOut, (newDateOut) => {
   // improve: check if out date is after the in date
-  const daysInMs = dateStringToMs(newDateOut) - dateStringToMs(props.dates.dateIn)
+  const daysInMs = dateStringToMs(newDateOut) - dateStringToMs(props.reservationData.dateIn)
   const value = Math.ceil(daysInMs / oneDayInMs)
   emit('nights-change', value)
 })
 
-const changeNights = (n: number) => {
-  const value = nightsProp.value + n
+const changeNights = (step: number) => {
+  const value = props.reservationData.nights + step
   emit('nights-change', value)
 }
 </script>
@@ -26,12 +25,11 @@ const changeNights = (n: number) => {
     <div class="nights-counter-inner">
        <div class="nights-counter__item nights-counter_button bordered rt-bordered"
             @click="changeNights(-1)">-</div>
-       <div class="nights-counter__item">{{nightsProp}}</div>
+       <div class="nights-counter__item">{{props.reservationData.nights}}</div>
        <div class="nights-counter__item nights-counter_button bordered lt-bordered"
             @click="changeNights(1)">+</div>
     </div>
   </div>
-
 </template>
 
 <style>

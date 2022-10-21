@@ -1,33 +1,39 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 import { dateMsToString } from './utils'
 import DateInput from './components/DateInput.vue'
 import NightsCounter from './components/NightsCounter.vue'
 
 // Improve: set default dateOut to the next day after the dateIn
-const dates = reactive({
+const reservationData = reactive({
   dateIn: dateMsToString(),
-  dateOut: dateMsToString()
+  dateOut: dateMsToString(),
+  nights: 0
 })
 
-const nights = ref(0)
-
 const updateDateOut = (newDateOut: string) => {
-  dates.dateOut = newDateOut
+  reservationData.dateOut = newDateOut
 }
 
 const updateNights = (val: number) => {
-  nights.value = val
+  reservationData.nights = val
 }
 </script>
 
 <template>
   <div class="container">
-    <date-input v-model="dates.dateIn"/>
+    <date-input v-model="reservationData.dateIn"/>
     <div class="nights-counter-wrapper">
-      <nights-counter :dates="dates" :nights="nights" @nights-change="updateNights"/>
+      <nights-counter
+        :reservationData="reservationData"
+        @nights-change="updateNights"
+      />
     </div>
-    <date-input v-model="dates.dateOut" :dates="dates" :nights="nights" @date-out-change="updateDateOut"/>
+    <date-input
+      v-model="reservationData.dateOut"
+      :reservationData="reservationData"
+      @date-out-change="updateDateOut"
+    />
   </div>
 </template>
 
