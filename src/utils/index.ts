@@ -7,7 +7,14 @@ export const dateStringToMs = (dateString: string): number => {
   return new Date(dateString).getTime()
 }
 
-export const dateMsToString = (ms?: number): string => {
-  const d = ms ? new Date(ms) : new Date()
-  return formatDateString(d.toLocaleDateString())
+export const dateMsToString = (ms: number): string => {
+  return formatDateString(new Date(ms).toLocaleDateString())
+}
+
+export const getCurrDate = (): { ms: number, str: string } => {
+  const d = new Date()
+  return {
+    ms: d.getTime(),
+    str: formatDateString(d.toLocaleDateString())
+  }
 }

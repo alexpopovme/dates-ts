@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { dateMsToString } from './utils'
+import { dateMsToString, getCurrDate, oneDayInMs } from './utils'
 import DateInput from './components/DateInput.vue'
 import NightsCounter from './components/NightsCounter.vue'
 
-// Improve: set default dateOut to the next day after the dateIn
+const currDate = getCurrDate()
+const initialNights = 1
+
 const reservationData = reactive({
-  dateIn: dateMsToString(),
-  dateOut: dateMsToString(),
-  nights: 0
+  dateIn: currDate.str,
+  dateOut: dateMsToString( oneDayInMs * initialNights + currDate.ms),
+  nights: initialNights
 })
 
 const updateDateOut = (newDateOut: string) => {
