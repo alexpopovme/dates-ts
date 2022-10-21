@@ -18,3 +18,4 @@ export const getCurrDate = (): { ms: number, str: string } => {
     str: formatDateString(d.toLocaleDateString())
   }
 }
+

@@ -3,11 +3,12 @@ import { reactive } from 'vue'
 import { dateMsToString, getCurrDate, oneDayInMs } from './utils'
 import DateInput from './components/DateInput.vue'
 import NightsCounter from './components/NightsCounter.vue'
+import { ReservationData } from './types/common'
 
 const currDate = getCurrDate()
 const initialNights = 1
 
-const reservationData = reactive({
+const reservationData: ReservationData = reactive({
   dateIn: currDate.str,
   dateOut: dateMsToString( oneDayInMs * initialNights + currDate.ms),
   nights: initialNights

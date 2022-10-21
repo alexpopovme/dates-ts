@@ -1,28 +1,52 @@
 <script setup lang="ts">
 import { watch } from 'vue'
-import { oneDayInMs, dateStringToMs, dateMsToString } from '../utils'
+import { ReservationData } from '../types/common'
+import {
+  oneDayInMs,
+  dateStringToMs,
+  dateMsToString,
+} from '../utils'
 
-// Improve: validate props
-const props = defineProps(['modelValue', 'reservationData'])
-const emit = defineEmits(['update:modelValue', 'date-out-change'])
+/*
+* Note: At the moment Vue v3.2.37 doesn't support direct
+* pass of imported type to the defineProps generic
+* so we can't use something like this: defineProps<ReservationData>
+* */
+
+interface Props {
+  modelValue: string
+  reservationData?: ReservationData
+}
+
+interface Emits {
+  (ev: 'update:modelValue', payload: string): void
+  (ev: 'date-out-change', payload: string): void
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
 
 let isDateChange = false
 
-const updateOutDate = (n: number) => {
-  const dateOutMs = dateStringToMs(props.reservationData.dateOut)
-  const plusDayMs = dateOutMs + oneDayInMs * n
-  emit('date-out-change', dateMsToString(plusDayMs))
-}
+const initConditionalWatchers = () => {
+  if (!props.reservationData) return
 
-if (props.reservationData) {
-  watch(() => props.reservationData.dateIn, (newDateIn) => {
-    const currNightsInMs = props.reservationData.nights * oneDayInMs
+  const requiredProps = props as Required<Props>
+
+  const updateOutDate = (n: number) => {
+    const dateOutMs = dateStringToMs(requiredProps.reservationData.dateOut)
+    const plusDayMs = dateOutMs + oneDayInMs * n
+    emit('date-out-change', dateMsToString(plusDayMs))
+  }
+
+  watch(() => requiredProps.reservationData.dateIn, (newDateIn) => {
+    const currNightsInMs = requiredProps.reservationData.nights * oneDayInMs
     const dateInMs = dateStringToMs(newDateIn)
     const newDateOutMs = dateInMs + currNightsInMs
     emit('date-out-change', dateMsToString(newDateOutMs))
   })
 
-  watch(() => props.reservationData.nights, (newVal, oldVal) => {
+  watch(() => requiredProps.reservationData.nights, (newVal, oldVal) => {
     if (isDateChange) {
       isDateChange = false
       return
@@ -30,6 +54,8 @@ if (props.reservationData) {
     updateOutDate(newVal > oldVal ? 1 : -1)
   })
 }
+
+initConditionalWatchers()
 
 const inputHandler = (ev: Event) => {
   isDateChange = true

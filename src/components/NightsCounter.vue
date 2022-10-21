@@ -1,10 +1,24 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 import { oneDayInMs, dateStringToMs } from '../utils'
+import { ReservationData } from '../types/common'
 
-// Improve: validate props
-const props = defineProps(['reservationData'])
-const emit = defineEmits(['nights-change'])
+/*
+* Note: At the moment Vue v3.2.37 doesn't support direct
+* pass of imported type to the defineProps generic
+* so we can't use something like this: defineProps<ReservationData>
+* */
+
+interface Props {
+  reservationData: ReservationData
+}
+
+interface Emits {
+  (ev: 'nights-change', payload: number): void
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
 
 watch(() => props.reservationData.dateOut, (newDateOut) => {
   // improve: check if out date is after the in date
