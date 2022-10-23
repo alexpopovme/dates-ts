@@ -33,9 +33,9 @@ const initConditionalWatchers = () => {
 
   const requiredProps = props as Required<Props>
 
-  const updateOutDate = (n: number) => {
+  const updateOutDate = (nights: number) => {
     const dateOutMs = dateStringToMs(requiredProps.reservationData.dateOut)
-    const plusDayMs = dateOutMs + oneDayInMs * n
+    const plusDayMs = dateOutMs + oneDayInMs * nights
     emit('date-out-change', dateMsToString(plusDayMs))
   }
 
@@ -51,7 +51,7 @@ const initConditionalWatchers = () => {
       isDateChange = false
       return
     }
-    updateOutDate(newVal > oldVal ? 1 : -1)
+    updateOutDate(newVal - oldVal)
   })
 }
 

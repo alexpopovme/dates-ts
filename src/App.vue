@@ -2,8 +2,13 @@
 import DateInput from './components/DateInput.vue'
 import NightsCounter from './components/NightsCounter.vue'
 import { initReservationData } from './utils/initReservationData'
+import { ReservationData } from '../types/common'
 
-const reservationData = initReservationData(1)
+interface Props {
+  reservationData?: ReservationData
+}
+const props = defineProps<Props>()
+const reservationData = props.reservationData ?? initReservationData(1)
 const updateDateOut = (newDateOut: string) => {
   reservationData.dateOut = newDateOut
 }

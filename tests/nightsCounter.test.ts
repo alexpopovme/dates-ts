@@ -23,7 +23,6 @@ const buttonTest = async (buttonSelector: string, action: 'add'|'sub') => {
   wrapper.unmount()
 }
 
-
 describe('NightsCounter component', () => {
   it('Should exist', () => {
     expect(NightsCounter).toBeTruthy()

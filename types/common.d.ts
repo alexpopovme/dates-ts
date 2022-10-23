@@ -3,3 +3,8 @@ export interface ReservationData {
   dateOut: string
   nights: number
 }
+
+export interface Props {
+  modelValue: string
+  reservationData?: ReservationData
+}

@@ -39,7 +39,11 @@ const changeNights = (step: number) => {
     <div class="nights-counter-inner">
        <div class="nights-counter__item nights-counter_button bordered rt-bordered"
             @click="changeNights(-1)">-</div>
-       <div class="nights-counter__item">{{props.reservationData.nights}}</div>
+       <div class="nights-counter__item">
+         <span class="night-counter__nights">
+           {{props.reservationData.nights}}
+         </span>
+       </div>
        <div class="nights-counter__item nights-counter_button bordered lt-bordered"
             @click="changeNights(1)">+</div>
     </div>
