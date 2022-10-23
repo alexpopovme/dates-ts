@@ -74,11 +74,12 @@ const inputHandler = (ev: Event) => {
   </label>
 </template>
 
-<style>
-.date-input__value {
-  height: 100%;
-  padding: 0 8px;
-  min-width: 218px;
-  min-height: 55px;
+<style lang="scss">
+.date-input {
+  &__value {
+    min-height: var(--dates-main-height);
+    padding: 0 8px;
+    min-width: 218px;
+  }
 }
 </style>

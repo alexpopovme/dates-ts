@@ -34,15 +34,17 @@ const updateNights = (val: number) => {
   </div>
 </template>
 
-<style>
-/* Improve: use SASS in components */
+<style lang="scss">
+$counterWrapperMargin: 8px;
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .nights-counter-wrapper {
-  margin: 0 8px;
+  height: 100%;
+  margin: 0 $counterWrapperMargin;
 }
 
 @media (max-width: 640px) {
@@ -50,7 +52,7 @@ const updateNights = (val: number) => {
     flex-direction: column;
   }
   .nights-counter-wrapper {
-    margin: 8px 0;
+    margin: $counterWrapperMargin 0;
   }
 }
 </style>

@@ -50,40 +50,38 @@ const changeNights = (step: number) => {
   </div>
 </template>
 
-<style>
+<style lang="scss">
 .nights-counter {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 120px;
-  box-sizing: border-box;
-}
-
-.nights-counter__text {
-  font-size: 0.8rem;
-  margin: 0;
-  padding: 3px;
+  min-height: var(--dates-main-height);
+  &__text {
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 3px;
+  }
+  &__item {
+    display: flex;
+    padding: 3px;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+  }
+  &_button {
+    cursor: pointer;
+    font-size: 1rem;
+    min-width: 28px;
+    flex-grow: 0;
+    user-select: none;
+    &:hover {
+      background-color: #dcdcdc;
+    }
+  }
 }
 
 .nights-counter-inner {
   display: flex;
-}
-
-.nights-counter__item {
-  display: flex;
-  padding: 3px;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-}
-
-.nights-counter_button {
-  cursor: pointer;
-  font-size: 1rem;
-  min-width: 28px;
-  flex-grow: 0;
-  user-select: none;
-}
-.nights-counter_button:hover {
-  background-color: #dcdcdc;
 }
 </style>
