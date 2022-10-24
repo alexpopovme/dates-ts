@@ -1,5 +1,9 @@
-// improve: break to separate variables (minMs, hourMs etc.) to avoid magic numbers
-export const oneDayInMs = 1000 * 3600 * 24
+const secondMs = 1000
+const minuteSeconds = 60
+const hourMinutes = 60
+const dayHours = 24
+
+export const oneDayInMs = secondMs * minuteSeconds * hourMinutes * dayHours
 
 export const formatDateString = (date: string): string => date.split('/').reverse().join('-')
 
