@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch } from 'vue'
+import { ref, watch } from 'vue'
 import { ReservationData } from '../../types/common'
 import {
   oneDayInMs,
@@ -26,6 +26,7 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
+const dateInputRef = ref<HTMLInputElement | null>(null)
 let isDateChange = false
 
 const initConditionalWatchers = () => {
@@ -39,18 +40,26 @@ const initConditionalWatchers = () => {
     emit('date-out-change', dateMsToString(plusDayMs))
   }
 
-  watch(() => requiredProps.reservationData.dateIn, (newDateIn) => {
+  const handleIncorrectNights = (nights: number) => {
+    const classListAction = nights < 0 ? 'add' : 'remove'
+    dateInputRef.value?.classList[classListAction]('err-bordered')
+  }
+
+  watch(() => requiredProps.reservationData.dateIn, (newDateIn: string) => {
     const currNightsInMs = requiredProps.reservationData.nights * oneDayInMs
     const dateInMs = dateStringToMs(newDateIn)
     const newDateOutMs = dateInMs + currNightsInMs
     emit('date-out-change', dateMsToString(newDateOutMs))
   })
 
-  watch(() => requiredProps.reservationData.nights, (newVal, oldVal) => {
+  watch(() => requiredProps.reservationData.nights, (newVal: number, oldVal: number) => {
+    handleIncorrectNights(newVal)
+
     if (isDateChange) {
       isDateChange = false
       return
     }
+
     updateOutDate(newVal - oldVal)
   })
 }
@@ -67,6 +76,7 @@ const inputHandler = (ev: Event) => {
 <template>
   <label class="date-input">
     <input type="date"
+           ref="dateInputRef"
            class="date-input__value bordered"
            :value="modelValue"
            @input="inputHandler"

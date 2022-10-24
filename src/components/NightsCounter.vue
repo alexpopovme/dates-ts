@@ -21,8 +21,9 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 watch(() => props.reservationData.dateOut, (newDateOut) => {
-  // improve: check if out date is after the in date
-  const daysInMs = dateStringToMs(newDateOut) - dateStringToMs(props.reservationData.dateIn)
+  const dateInMs = dateStringToMs(props.reservationData.dateIn)
+  const newDateOutMs = dateStringToMs(newDateOut)
+  const daysInMs = newDateOutMs - dateInMs
   const value = Math.ceil(daysInMs / oneDayInMs)
   emit('nights-change', value)
 })

@@ -33,6 +33,13 @@ body {
   border-radius: 4px;
 }
 
+.err-bordered {
+  border-color: tomato;
+  &:focus-visible {
+    outline: none;
+  }
+}
+
 .rt-bordered {
   border-left: 0;
   @include nightsCounterButtonBorderReset
